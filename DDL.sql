@@ -14,7 +14,6 @@ INSERT INTO Matches (opponentName, matchDate)
 VALUES ('Redwood Kickers', '2025-06-13  18:00:00'),
     ('Venice Beach FC', '2025-06-24 18:00:00'),
     ('TBD', '2025-07-10 18:30:00')
-
 ;
 
 
@@ -57,7 +56,7 @@ CREATE TABLE Orders (
     orderDate DATETIME NOT NULL,
     total INT NOT NULL,
     paymentStatus VARCHAR(10) NOT NULL CHECK (paymentStatus IN ('Paid', 'Processing', 'Cancelled', 'Refunded')),
-    FOREIGN KEY (customerID) REFERENCES Customers(customerID)
+    FOREIGN KEY (customerID) REFERENCES Customers(customerID) ON DELETE CASCADE
 );
 
 INSERT INTO Orders (customerID, orderDate, total, paymentStatus) 
