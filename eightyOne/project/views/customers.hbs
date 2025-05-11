@@ -1,0 +1,56 @@
+<h1>Customers</h1>
+
+{{! READ table }}
+<table>
+    <thead>
+        {{! For the table header row, we print the DB attribute names }}
+        <tr>
+            {{#each customers.[0]}}
+            <th>
+                {{@key}}
+            </th>
+            {{/each}}
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {{! For each row, print the customerID, firstName, lastName, email, phone}}
+        {{#each customers}}
+        <tr>
+            <td>{{this.customerID}}</td>
+            <td>{{this.firstName}}</td>
+            <td>{{this.lastName}}</td>
+            <td>{{this.email}}</td>
+            <td>{{this.phone}}</td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+{{! UPDATE form }}
+<h2>Update a Customer</h2>
+<form class='cuForm' id='update_customer_form'>
+    <label for='update_customer_id'>Customer to Update: </label>
+    <select name='update_customer_id' id='update_customer_id' required>
+        <option value='' disabled selected>Select a Customer</option>
+        {{#each customers}}
+        <option value='{{this.customerID}}' required>
+            {{this.customerID}}
+            -
+            {{this.firstName}}
+            {{this.lastName}}
+        </option>
+        {{/each}}
+    </select>
+
+    <label for='update_customer_email'>Email: </label>
+    <input type='string' name='update_customer_email' id='update_customer_email'/>
+
+    <input type='submit' />
+
+       <label for='update_customer_phone'>Phone: </label>
+    <input type='string' name='update_customer_phone' id='update_customer_phone'/>
+
+    <input type='submit' />
+</form>
