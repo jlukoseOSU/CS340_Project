@@ -1,0 +1,32 @@
+<h1>Match Tickets</h1>
+
+{{! READ table }}
+<table>
+    <thead>
+        {{! For the table header row, we print the DB attribute names }}
+        <tr>
+            {{#each matchTickets.[0]}}
+            <th>
+                {{@key}}
+            </th>
+            {{/each}}
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {{! For each row, print the tickets information.}}
+        {{#each matchTickets}}
+        <tr>
+            <td>{{this.ticketID}}</td>
+            <td>{{this.opponentName}}</td>
+            <td>{{this.matchDate}}</td>
+            <td>{{this.seatSection}}</td>
+            <td>{{this.seatRow}}</td>
+            <td>{{this.seatNumber}}</td>
+            <td>{{this.customerName}}</td>
+            <td>{{this.price}}</td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>

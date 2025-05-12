@@ -1,4 +1,3 @@
-
 SET FOREIGN_KEY_CHECKS=0;
 SET AUTOCOMMIT = 0;
 
@@ -14,6 +13,7 @@ INSERT INTO Matches (opponentName, matchDate)
 VALUES ('Redwood Kickers', '2025-06-13  18:00:00'),
     ('Venice Beach FC', '2025-06-24 18:00:00'),
     ('TBD', '2025-07-10 18:30:00')
+
 ;
 
 
@@ -38,7 +38,7 @@ CREATE TABLE Customers (
     firstName VARCHAR(50) NOT NULL,
     lastName VARCHAR(50) NOT NULL,
     email VARCHAR(50) NOT NULL,
-    phone INT
+    phone VARCHAR(15)
 );
 
 INSERT INTO Customers (firstName, lastName, email, phone) 
@@ -56,7 +56,7 @@ CREATE TABLE Orders (
     orderDate DATETIME NOT NULL,
     total INT NOT NULL,
     paymentStatus VARCHAR(10) NOT NULL CHECK (paymentStatus IN ('Paid', 'Processing', 'Cancelled', 'Refunded')),
-    FOREIGN KEY (customerID) REFERENCES Customers(customerID) ON DELETE CASCADE
+    FOREIGN KEY (customerID) REFERENCES Customers(customerID)
 );
 
 INSERT INTO Orders (customerID, orderDate, total, paymentStatus) 
@@ -71,7 +71,7 @@ CREATE TABLE MatchTickets (
     ticketID INT AUTO_INCREMENT PRIMARY KEY,
     matchID INT NOT NULL,
     seatID INT NOT NULL,
-    orderID INT NOT NULL,
+    orderID INT,
     price INT NOT NULL,
     FOREIGN KEY (matchID) REFERENCES Matches(matchID) ON DELETE CASCADE,
     FOREIGN KEY (seatID) REFERENCES Seats(seatID) ON DELETE CASCADE,
