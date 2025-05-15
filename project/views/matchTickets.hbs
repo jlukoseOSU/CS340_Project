@@ -26,7 +26,58 @@
             <td>{{this.seatNumber}}</td>
             <td>{{this.customerName}}</td>
             <td>{{this.price}}</td>
+
+             <form id='delete_matchTicket_form'>
+                <input type='hidden' name='delete_matchTicket_id' value='{{this.ticketID}}' />
+                <td>
+                    <button type='submit'>
+                        Delete
+                    </button>
+                </td>
+            </form>
         </tr>
         {{/each}}
     </tbody>
 </table>
+
+<h2>Update Match Ticket</h2>
+<form class='cuForm' id='update_matchTicket_form'>
+    <label for='update_ticket_id'>Ticket to Update: </label>
+    <select name='update_ticket_id' id='update_ticket_id' required>
+        <option value='' disabled selected>Select Ticket</option>
+        {{#each matchTickets}}
+        <option value='{{this.ticketID}}' required>
+            {{this.ticketID}}
+            -
+            {{this.customerName}}
+            -
+            {{this.opponentName}}
+        </option>
+        {{/each}}
+    </select>
+
+    <label for='update_ticket_seats'>Seat Section: </label>
+    <select name='update_seat_section' id='update_seat_section' required>
+        <option value='' disabled selected>{{this.seatSection}}</option>
+        <option value='VIP'>VIP</option>
+        <option value='GA'>GA</option>
+    </select>
+
+    <select>
+
+    <label for='update_ticket_seats'>Seat Row: </label>
+    <select name='update_seat_row' id='update_seat_row' required>
+        <option value='' disabled selected>{{this.seatRow}}</option>
+        <option value='VIP'>VIP</option>
+        <option value='GA'>GA</option>
+    </select>
+
+    <select>
+
+    <label for='update_ticket_seats'>Seat Number: </label>
+    <select name='update_seat_row' id='update_seat_row' required>
+        <option value='' disabled selected>{{this.seatNumber}}</option>
+        <option value='VIP'>VIP</option>
+        <option value='GA'>GA</option>
+    </select>
+</form>

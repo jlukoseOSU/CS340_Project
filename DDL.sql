@@ -54,7 +54,7 @@ CREATE TABLE Orders (
     orderID INT AUTO_INCREMENT PRIMARY KEY,
     customerID INT NOT NULL,
     orderDate DATETIME NOT NULL,
-    total INT NOT NULL,
+    total Decimal(10,2) NOT NULL,
     paymentStatus VARCHAR(10) NOT NULL CHECK (paymentStatus IN ('Paid', 'Processing', 'Cancelled', 'Refunded')),
     FOREIGN KEY (customerID) REFERENCES Customers(customerID)
 );
@@ -72,7 +72,7 @@ CREATE TABLE MatchTickets (
     matchID INT NOT NULL,
     seatID INT NOT NULL,
     orderID INT,
-    price INT NOT NULL,
+    price Decimal(10, 2) NOT NULL,
     FOREIGN KEY (matchID) REFERENCES Matches(matchID) ON DELETE CASCADE,
     FOREIGN KEY (seatID) REFERENCES Seats(seatID) ON DELETE CASCADE,
     FOREIGN KEY (orderID) REFERENCES Orders(orderID) ON DELETE CASCADE
