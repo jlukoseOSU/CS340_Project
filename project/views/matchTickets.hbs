@@ -5,11 +5,14 @@
     <thead>
         {{! For the table header row, we print the DB attribute names }}
         <tr>
-            {{#each matchTickets.[0]}}
-            <th>
-                {{@key}}
-            </th>
-            {{/each}}
+            <th>Ticket ID</th>
+            <th>Opponent Name</th>
+            <th>Match Date</th>
+            <th>Seat Section</th>
+            <th>Seat Row</th>
+            <th>Seat Number</th>
+            <th>Customer Name</th>
+            <th>Price</th>
             <th></th>
         </tr>
     </thead>
@@ -21,7 +24,7 @@
             <td>{{this.ticketID}}</td>
             <td>{{this.opponentName}}</td>
             <td>{{this.matchDate}}</td>
-            <td>{{this.seatSection}}</td>
+            <td>{{this.section}}</td>
             <td>{{this.seatRow}}</td>
             <td>{{this.seatNumber}}</td>
             <td>{{this.customerName}}</td>
@@ -44,40 +47,37 @@
 <form class='cuForm' id='update_matchTicket_form'>
     <label for='update_ticket_id'>Ticket to Update: </label>
     <select name='update_ticket_id' id='update_ticket_id' required>
-        <option value='' disabled selected>Select Ticket</option>
+        <option value='' disabled selected hidden>Select Ticket</option>
         {{#each matchTickets}}
         <option value='{{this.ticketID}}' required>
             {{this.ticketID}}
             -
-            {{this.customerName}}
-            -
             {{this.opponentName}}
+            -
+            {{this.customerName}}
         </option>
         {{/each}}
     </select>
 
-    <label for='update_ticket_seats'>Seat Section: </label>
-    <select name='update_seat_section' id='update_seat_section' required>
-        <option value='' disabled selected>{{this.seatSection}}</option>
-        <option value='VIP'>VIP</option>
-        <option value='GA'>GA</option>
+    <label for='update_match'>Match: </label>
+    <select name='update_match' id='update_match' required>
+        <option value='' disabled selected hidden>Select a match</option>
+        {{#each matches}}
+            <option value='{{this.matchID}}'>
+                {{this.opponentName}} - {{this.matchDate}}
+            </option>
+        {{/each}}
     </select>
 
-    <select>
 
-    <label for='update_ticket_seats'>Seat Row: </label>
-    <select name='update_seat_row' id='update_seat_row' required>
-        <option value='' disabled selected>{{this.seatRow}}</option>
-        <option value='VIP'>VIP</option>
-        <option value='GA'>GA</option>
+    <label for='update_seat'>Seat: </label>
+    <select name='update_seat' id='update_seat' required>
+        <option value='' disabled selected hidden>Select a seat</option>
+        {{#each seats}}
+            <option value='{{this.seatID}}'>
+                {{this.section}} {{this.seatRow}} {{this.seatNumber}}
+            </option>
+        {{/each}}
     </select>
 
-    <select>
-
-    <label for='update_ticket_seats'>Seat Number: </label>
-    <select name='update_seat_row' id='update_seat_row' required>
-        <option value='' disabled selected>{{this.seatNumber}}</option>
-        <option value='VIP'>VIP</option>
-        <option value='GA'>GA</option>
-    </select>
 </form>

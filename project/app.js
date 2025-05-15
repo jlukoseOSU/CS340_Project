@@ -5,7 +5,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
-const PORT = 3001;
+const PORT = 3000;
 
 // Database
 const db = require('./database/db-connector');
@@ -53,8 +53,7 @@ app.get('/matches', async function (req, res) {
     try {
         // Create and execute our queries
         // In query1, we display our matches data
-        const query1 = `SELECT * FROM Matches 
-        ORDER BY matchDATE ASC;`;
+        const query1 = `SELECT matchID, opponentName, DATE_FORMAT(matchDate, "%M %d %Y") AS matchDate FROM Matches`;
         const [matches] = await db.query(query1);
 
         // Render the matches.hbs file, and also send the renderer
@@ -114,7 +113,7 @@ app.get('/seats', async function (req, res) {
 app.get('/matchTickets', async function (req, res) {
     try {
         // display our order data
-        const query1 = `SELECT MatchTickets.ticketID, opponentName, matchDate, section AS seatSection, 
+        const query1 = `SELECT MatchTickets.ticketID, opponentName, DATE_FORMAT(matchDate, "%M %d %Y") AS matchDate, section, 
         seatRow, seatNumber, CONCAT(Customers.firstName, ' ', Customers.lastName) AS customerName, MatchTickets.price
                         FROM MatchTickets
                         JOIN Matches ON MatchTickets.matchID = Matches.matchID
@@ -124,9 +123,19 @@ app.get('/matchTickets', async function (req, res) {
                         ORDER BY matchDate ASC`;
         const [matchTickets] = await db.query(query1);
 
+        const query2 = `SELECT matchID, opponentName, DATE_FORMAT(matchDate, "%M %d %Y") AS matchDate FROM Matches`;
+        const [matches] = await db.query(query2);
+
+        const query3 = `SELECT * FROM Seats`;
+        const [seats] = await db.query(query3);
+
         // Render the matchTickets.hbs file, and also send the renderer
         //  an object that contains our  ticket information
-        res.render('matchTickets', { matchTickets: matchTickets});
+        res.render('matchTickets', { 
+            matchTickets: matchTickets,
+            matches: matches,
+            seats: seats
+        });
     } catch (error) {
         console.error('Error executing queries:', error);
         // Send a generic error message to the browser
