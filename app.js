@@ -5,8 +5,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
-const PORT = 3000;
-
 // Database
 const db = require('./database/db-connector');
 
@@ -148,10 +146,10 @@ app.get('/matchTickets', async function (req, res) {
 // ########################################
 // ########## LISTENER
 
-app.listen(PORT, function () {
+app.listen(process.env.PORT, function () {
     console.log(
         'Express started on http://localhost:' +
-            PORT +
+            process.env.PORT +
             '; press Ctrl-C to terminate.'
     );
 });
