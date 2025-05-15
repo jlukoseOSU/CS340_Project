@@ -112,7 +112,7 @@ app.get('/matchTickets', async function (req, res) {
     try {
         // display our order data
         const query1 = `SELECT MatchTickets.ticketID, opponentName, DATE_FORMAT(matchDate, "%M %d %Y") AS matchDate, section, 
-        seatRow, seatNumber, CONCAT(Customers.firstName, ' ', Customers.lastName) AS customerName, MatchTickets.price
+        seatRow, seatNumber, CONCAT(Customers.firstName, ' ', Customers.lastName) AS customerName, MatchTickets.price, DATE_FORMAT(orderDate, "%M %d %Y") AS orderDate
                         FROM MatchTickets
                         JOIN Matches ON MatchTickets.matchID = Matches.matchID
                         JOIN Seats ON MatchTickets.seatID = Seats.seatID
