@@ -32,7 +32,7 @@
 <form class='cuForm' id='update_customer_form'>
     <label for='update_customer_id'>Customer to Update: </label>
     <select name='update_customer_id' id='update_customer_id' required>
-        <option value='' disabled selected>Select a Customer</option>
+        <option value='' disabled selected hidden>Select a Customer</option>
         {{#each customers}}
         <option value='{{this.customerID}}' required>
             {{this.customerID}}
