@@ -67,7 +67,8 @@ BEGIN
     INSERT INTO Orders (customerID, orderDate, total, paymentStatus) 
     VALUES ((SELECT customerID from Customers where firstName = 'John' and lastName = 'Doe'), '2025-05-01 12:20:00', 20, 'Paid'),
         ((SELECT customerID from Customers where firstName = 'Emil' and lastName = 'Johnson'), '2025-04-28 09:15:00', 20, 'Paid'),
-        ((SELECT customerID from Customers where firstName = 'Helen' and lastName = 'Yamal'), '2025-05-02 15:30:05', 20, 'Paid')
+        ((SELECT customerID from Customers where firstName = 'Helen' and lastName = 'Yamal'), '2025-05-02 15:30:05', 20, 'Paid'),
+        ((SELECT customerID from Customers where firstName = 'Emil' and lastName = 'Johnson'), '2025-05-22 10:32:00', 20, 'Paid')
     ;
 
     -- Table structure for table 'MatchTickets'
@@ -89,7 +90,9 @@ BEGIN
         ((SELECT matchID from Matches where opponentName = 'Venice Beach FC'), (SELECT seatID from Seats where section = 'GA' and
         seatRow = 'GA' and seatNumber = 2), (SELECT orderID from Orders where orderDate = '2025-04-28 09:15:00'), 20),
         ((SELECT matchID from Matches where opponentName = 'Venice Beach FC'), (SELECT seatID from Seats where section = 'GA' and
-        seatRow = 'GA' and seatNumber = 3), (SELECT orderID from Orders where orderDate = '2025-05-02 15:30:05'), 20)
+        seatRow = 'GA' and seatNumber = 3), (SELECT orderID from Orders where orderDate = '2025-05-02 15:30:05'), 20),
+        ((SELECT matchID from Matches where opponentName = 'Redwood Kickers'), (SELECT seatID from Seats where section = 'GA' and
+        seatRow = 'GA' and seatNumber = 2), (SELECT orderID from Orders where orderDate = '2025-05-22 10:32:00'), 20)
     ;
 
 
