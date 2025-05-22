@@ -56,10 +56,8 @@ SELECT MatchTickets.ticketID, opponentName, DATE_FORMAT(Matches.matchDate, "%M %
 -- Update Match Ticket Seats and Price --
 SELECT seatID FROM Seats
 WHERE section = :input AND seatRow = :input AND seatNumber = :input;
-
 UPDATE MatchTickets 
    SET seatID = :seatIDInput, price = :priceInput
-       
    WHERE ticketID = :ticketIDInput
 
 -- Populate Matches Dropdown in Match Tickets Update Form --
