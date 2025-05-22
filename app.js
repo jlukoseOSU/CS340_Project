@@ -167,6 +167,7 @@ app.put('/customers/update', async function (req, res) {
             phone,
             customerID
         ]);
+        res.status(200).send('Update successful');
     } catch (error) {
         console.error('Error updating customer:', error);
         res.status(500).send('Failed to update customer.');
