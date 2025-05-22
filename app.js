@@ -8,11 +8,10 @@ app.use(express.static('public'));
 // Database
 const db = require('./database/db-connector');
 
-
-
 // Handlebars
 const { engine, ExpressHandlebars } = require('express-handlebars'); // Import express-handlebars engine
 app.engine('.hbs', engine({ extname: '.hbs',
+    // helper function to convert objects to JSON
     helpers: {
         json: function (context) {
             return JSON.stringify(context);
@@ -38,15 +37,11 @@ app.get('/', async function (req, res) {
 
 app.get('/customers', async function (req, res) {
     try {
-        // Create and execute our queries
-        // In query1, we display our customer data
-        // const query1 = `SELECT * FROM Customers
-        //     ORDER BY firstName ASC;`;
-        // const [customers] = await db.query(query1);
+        // get customers data
          const [[customers]] = await db.query('CALL getCustomers()');
 
         // Render the customers.hbs file, and also send the renderer
-        //  an object that contains our  customer information
+        //  an object that contains our customer information
         res.render('customers', { customers: customers});
     } catch (error) {
         console.error('Error executing queries:', error);
@@ -59,14 +54,11 @@ app.get('/customers', async function (req, res) {
 
 app.get('/matches', async function (req, res) {
     try {
-        // Create and execute our queries
-        // In query1, we display our matches data
-        // const query1 = `SELECT matchID, opponentName, DATE_FORMAT(matchDate, "%M %d %Y") AS matchDate FROM Matches`;
-        // const [matches] = await db.query(query1);
+        // get matches data
         const [[matches]] = await db.query('CALL getMatches()');
 
         // Render the matches.hbs file, and also send the renderer
-        //  an object that contains our  matches information
+        //  an object that contains our matches information
         res.render('matches', { matches: matches});
     } catch (error) {
         console.error('Error executing queries:', error);
@@ -79,18 +71,11 @@ app.get('/matches', async function (req, res) {
 
 app.get('/orders', async function (req, res) {
     try {
-        // Create and execute our queries
-        // In query1, we display our order data
-        // const query1 = `SELECT  Orders.orderID, CONCAT(Customers.firstName, ' ', Customers.lastName) AS customerName,
-        //                 DATE_FORMAT(Orders.orderDate, "%M %d %Y") as orderDate, Orders.total, Orders.paymentStatus
-        //                 FROM Orders
-        //                 INNER JOIN Customers ON Orders.customerID = Customers.customerID
-        //                 ORDER BY Orders.orderDate ASC`;
-        // const [orders] = await db.query(query1);
+        // get orders data
         const [[orders]] = await db.query('CALL getOrders()');
 
         // Render the orders.hbs file, and also send the renderer
-        //  an object that contains our  orders information
+        //  an object that contains our orders information
         res.render('orders', { orders: orders});
     } catch (error) {
         console.error('Error executing queries:', error);
@@ -103,14 +88,11 @@ app.get('/orders', async function (req, res) {
 
 app.get('/seats', async function (req, res) {
     try {
-        // display our order data
-        // const query1 = `SELECT * FROM Seats
-        //                 Order BY section, seatRow, seatNumber ASC`;
-        // const [seats] = await db.query(query1);
+        // get seats data
         const [[seats]] = await db.query('CALL getSeats()');
 
         // Render the seats.hbs file, and also send the renderer
-        //  an object that contains our  seats information
+        //  an object that contains our seats information
         res.render('seats', { seats: seats});
     } catch (error) {
         console.error('Error executing queries:', error);
@@ -123,28 +105,17 @@ app.get('/seats', async function (req, res) {
 
 app.get('/matchTickets', async function (req, res) {
     try {
-        // display match tickets data
-        // const query1 = `SELECT MatchTickets.ticketID, opponentName, DATE_FORMAT(matchDate, "%M %d %Y") AS matchDate, section, 
-        // seatRow, seatNumber, CONCAT(Customers.firstName, ' ', Customers.lastName) AS customerName, MatchTickets.price, DATE_FORMAT(orderDate, "%M %d %Y") AS orderDate
-        //                 FROM MatchTickets
-        //                 JOIN Matches ON MatchTickets.matchID = Matches.matchID
-        //                 JOIN Seats ON MatchTickets.seatID = Seats.seatID
-        //                 JOIN Orders ON MatchTickets.orderID = Orders.orderID
-        //                 JOIN Customers ON Orders.customerID = Customers.customerID
-        //                 ORDER BY matchDate ASC`;
-        // const [matchTickets] = await db.query(query1);
+        // get matchTickets data for diplay table
         const [[matchTickets]] = await db.query('CALL getMatchTickets()');
 
-        // const query2 = `SELECT matchID, opponentName, DATE_FORMAT(matchDate, "%M %d %Y") AS matchDate FROM Matches`;
-        // const [matches] = await db.query(query2);
+        // get matches data for dropdown
         const [[matches]] = await db.query('CALL GetMatches()');
 
-        // const query3 = `SELECT * FROM Seats`;
-        // const [seats] = await db.query(query3);
+        // get seats data for dropdown
         const [[seats]] = await db.query('CALL getSeats()');
 
         // Render the matchTickets.hbs file, and also send the renderer
-        //  an object that contains our  ticket information
+        //  an object that contains our ticket, matches, and seats information
         res.render('matchTickets', { 
             matchTickets: matchTickets,
             matches: matches,
@@ -161,6 +132,7 @@ app.get('/matchTickets', async function (req, res) {
 
 app.put('/customers/update', async function (req, res) {
     try {
+        // update customer info with info from form
         const { customerID, firstName, lastName, email, phone } = req.body;
         await db.query('CALL updateCustomer(?, ?, ?)', [
             email,

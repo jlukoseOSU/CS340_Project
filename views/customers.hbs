@@ -53,6 +53,8 @@
 </form>
 
 <script>
+
+    // submit for updating a customer
     document.getElementById('update_customer_form').addEventListener('submit', async function(event) {
         event.preventDefault();
 
@@ -62,11 +64,12 @@
         const email = document.getElementById('update_customer_email').value;
         const phone = document.getElementById('update_customer_phone').value;
 
-        if (!email) {
+        if (!email) { // email is required
             alert('Email cannot be empty');
             return;
         }
 
+        // Send PUT request to server to update customer
         const response = await fetch('/customers/update', {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
@@ -79,12 +82,13 @@
         
         if (response.ok) {
             console.log('Customer updated successfully');
-            location.reload();
+            location.reload(); // reload page to see updated customer info
         } else {
             console.log('Error updating customer');
         }
     });
 
+    // Populate email and phone when a customer is selected
     const customersData = {{{json customers}}};
     const customerSelect = document.getElementById('update_customer_id');
     const emailInput = document.getElementById('update_customer_email');
