@@ -174,6 +174,37 @@ app.put('/customers/update', async function (req, res) {
     }
 });
 
+// CREATE ROUTES
+app.post('/matches/create', async function (req, res) {
+    try {
+        // Parse frontend form information
+        let data = req.body;
+
+        // Create and execute our queries
+        // Using parameterized queries (Prevents SQL injection attacks)
+        const query1 = `CALL CreateMatch(?, ?);`;
+
+        // Store ID of last inserted row
+        const [[result]] = await db.query(query1, [
+            data.create_match_opponentName,
+            data.create_match_matchDate
+        ]);
+
+        console.log(`CREATE match. ID: ${result.new_ID} ` +
+            `Opponent: ${data.create_match_opponentName}`
+        );
+
+        // Redirect the user to the updated webpage
+        res.redirect('/matches');
+    } catch (error) {
+        console.error('Error executing queries:', error);
+        // Send a generic error message to the browser
+        res.status(500).send(
+            'An error occurred while executing the database queries.'
+        );
+    }
+});
+
 app.post('/reset-db', async function (req, res) {
     console.log('Resetting database...');
     try {

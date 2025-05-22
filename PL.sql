@@ -44,6 +44,8 @@ CREATE PROCEDURE CreateMatch(IN opponentNameInput VARCHAR(255), IN matchDateInpu
 BEGIN
    INSERT INTO Matches (opponentName, matchDate) 
    VALUES (opponentNameInput, matchDateInput);
+
+   SELECT LAST_INSERT_ID() AS new_ID;
 END //
 DELIMITER ;
 

@@ -25,12 +25,12 @@
 
 {{! CREATE form }}
 <h2>Create a Match</h2>
-<form class='cuForm' id='create_match_form'>
+<form class='cuForm' id='create_match_form' method='POST' action='/matches/create'>
     <label for='create_match_opponentName'>Opponent Name: </label>
     <input type='text' name='create_match_opponentName' id='create_match_opponentName' required />
 
     <label for='create_match_matchDate'>Match Date: </label>
-    <input type='text' name='create_match_matchDate' id='create_match_matchDate' />
+    <input type='date' name='create_match_matchDate' id='create_match_matchDate' />
 
     <input type='submit' />
 </form>
