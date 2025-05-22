@@ -1,4 +1,6 @@
--- CUSTOMERS PAGE --
+-- -----------------------------------------------------
+-- Customers Page
+-- -----------------------------------------------------
 
 -- Display all customers --
 SELECT customerID, firstName, lastName FROM Customers
@@ -11,7 +13,9 @@ UPDATE Customers
    WHERE customerID = :customerIDInput
 
 
--- Matches Page --
+-- -----------------------------------------------------
+-- Matches Page
+-- -----------------------------------------------------
 
 -- Display all matches ordered by date --
 SELECT matchID, opponentName, DATE_FORMAT(matchDate, "%M %d %Y") AS matchDate FROM Matches
@@ -21,7 +25,10 @@ ORDER BY matchDate ASC;
 INSERT INTO Matches (opponentName, matchDate) 
 VALUES (:opponentNameInput, :matchDateInput);
 
--- Orders Page --
+
+-- -----------------------------------------------------
+-- Orders Page
+-- -----------------------------------------------------
 
 -- Read Orders Info and customer name, contact info --
 SELECT  Orders.orderID, DATE_FORMAT(Orders.orderDate, "%M %d %Y") as orderDate, Orders.total, Orders.paymentStatus, Customers.firstName, Customers.lastName,
@@ -34,13 +41,18 @@ DELETE FROM Orders
 WHERE orderID = :selectedID;
 
 
--- Seats Page --
+-- -----------------------------------------------------
+-- Seats Page
+-- -----------------------------------------------------
 
 -- Display all seats ordered by section, row, and seatNumber --
 SELECT seatID, section, seatRow, seatNumber FROM Seats
 Order BY section, seatRow, seatNumber ASC;
 
--- Match Tickets Page --
+
+-- -----------------------------------------------------
+-- Match Tickets Page
+-- -----------------------------------------------------
 
 -- Display all match tickets ordered by match date --
 SELECT MatchTickets.ticketID, opponentName, DATE_FORMAT(Matches.matchDate, "%M %d %Y") AS matchDate, section AS seatSection, 
