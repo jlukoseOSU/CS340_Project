@@ -1,4 +1,6 @@
--- CUSTOMERS PAGE --
+--- -----------------------------------------------------
+-- Customers Page
+-- -----------------------------------------------------
 
 -- Display all customers --
 DROP PROCEDURE IF EXISTS GetCustomers;
@@ -24,7 +26,9 @@ END //
 DELIMITER ;
 
 
--- Matches Page --
+-- -----------------------------------------------------
+-- Matches Page
+-- -----------------------------------------------------
 
 -- Display all matches ordered by date --
 DROP PROCEDURE IF EXISTS GetMatches;
@@ -50,7 +54,9 @@ END //
 DELIMITER ;
 
 
--- Orders Page --
+-- -----------------------------------------------------
+-- Orders Page
+-- -----------------------------------------------------
 
 -- Read Orders Info and customer name, contact info --
 DROP PROCEDURE IF EXISTS GetOrders;
@@ -76,7 +82,9 @@ END //
 DELIMITER ;
 
 
--- Seats Page --
+-- -----------------------------------------------------
+-- Seats Page
+-- -----------------------------------------------------
 
 -- Display all seats ordered by section, row, and seatNumber --
 DROP PROCEDURE IF EXISTS GetSeats;
@@ -89,7 +97,9 @@ BEGIN
 END //
 
 
--- Match Tickets Page --
+-- -----------------------------------------------------
+-- Match Tickets Page
+-- -----------------------------------------------------
 
 -- Display all match tickets ordered by match date --
 DROP PROCEDURE IF EXISTS GetMatchTickets;
