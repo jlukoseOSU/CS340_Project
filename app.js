@@ -71,7 +71,7 @@ app.get('/orders', async function (req, res) {
         // Create and execute our queries
         // In query1, we display our order data
         const query1 = `SELECT  Orders.orderID, CONCAT(Customers.firstName, ' ', Customers.lastName) AS customerName,
-                        Orders.orderDate, Orders.total, Orders.paymentStatus
+                        DATE_FORMAT(Orders.orderDate, "%M %d %Y") as orderDate, Orders.total, Orders.paymentStatus
                         FROM Orders
                         INNER JOIN Customers ON Orders.customerID = Customers.customerID
                         ORDER BY Orders.orderDate ASC`;
