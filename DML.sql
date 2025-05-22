@@ -1,21 +1,25 @@
 -- CUSTOMERS PAGE --
 
+-- Display all customers --
 SELECT customerID, firstName, lastName FROM Customers
 ORDER BY firstName ASC;
+
+-- Update Customer email and Phone --
+UPDATE Customers 
+   SET email = :emailInput, 
+   phone = :phoneInput
+   WHERE customerID = :customerIDInput
 
 
 -- Matches Page --
 
+-- Display all matches ordered by date --
 SELECT matchID, opponentName, DATE_FORMAT(matchDate, "%M %d %Y") AS matchDate FROM Matches
 ORDER BY matchDate ASC;
 
-
--- Seats Page --
-
--- Display all seats ordered by section, row, and seatNumber --
-
-SELECT seatID, section, seatRow, seatNumber FROM Seats
-Order BY section, seatRow, seatNumber ASC;
+-- CREATE a new Match on Matches Page --
+INSERT INTO Matches (opponentName, matchDate) 
+VALUES (:opponentNameInput, :matchDateInput);
 
 -- Orders Page --
 
@@ -25,9 +29,20 @@ Customers.email
 FROM Orders
 Inner JOIN Customers ON Orders.customerID = Customers.customerID
 
+-- Delete Order --
+DELETE FROM Orders
+WHERE orderID = :selectedID;
+
+
+-- Seats Page --
+
+-- Display all seats ordered by section, row, and seatNumber --
+SELECT seatID, section, seatRow, seatNumber FROM Seats
+Order BY section, seatRow, seatNumber ASC;
 
 -- Match Tickets Page --
 
+-- Display all match tickets ordered by match date --
 SELECT MatchTickets.ticketID, opponentName, DATE_FORMAT(Matches.matchDate, "%M %d %Y") AS matchDate, section AS seatSection, 
         seatRow, seatNumber, CONCAT(Customers.firstName, ' ', Customers.lastName) AS customerName, 
         Orders.orderID, ATE_FORMAT(Orders.orderDate, "%M %d %Y") as orderDate, MatchTickets.price
@@ -47,22 +62,14 @@ UPDATE MatchTickets
        
    WHERE ticketID = :ticketIDInput
 
--- Update Customer email and Phone --
+-- Populate Matches Dropdown in Match Tickets Update Form --
+SELECT matchID, opponentName, DATE_FORMAT(matchDate, "%M %d %Y") AS matchDate FROM Matches
+ORDER BY matchDate ASC;
 
-UPDATE Customers 
-   SET email = :emailInput, 
-   phone = :phoneInput
-       
-   WHERE customerID = :customerIDInput
+-- Populate Seats Dropdown in Match Tickets Update Form --
+SELECT seatID, section, seatRow, seatNumber FROM Seats
+Order BY section, seatRow, seatNumber ASC;
 
 -- Delete Match Ticket --
 DELETE FROM MatchTickets
 WHERE ticketID = :selectedID;
-
--- Delete Order --
-DELETE FROM Orders
-WHERE orderID = :selectedID;
-
--- CREATE a new Match on Matches Page --
-INSERT INTO Matches (opponentName, matchDate) 
-VALUES (:opponentNameInput, :matchDateInput);
