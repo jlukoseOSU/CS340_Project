@@ -8,10 +8,19 @@ app.use(express.static('public'));
 // Database
 const db = require('./database/db-connector');
 
+
+
 // Handlebars
-const { engine } = require('express-handlebars'); // Import express-handlebars engine
-app.engine('.hbs', engine({ extname: '.hbs' })); // Create instance of handlebars
+const { engine, ExpressHandlebars } = require('express-handlebars'); // Import express-handlebars engine
+app.engine('.hbs', engine({ extname: '.hbs',
+    helpers: {
+        json: function (context) {
+            return JSON.stringify(context);
+        }
+    }
+ })); // Create instance of handlebars
 app.set('view engine', '.hbs'); // Use handlebars engine for *.hbs files.
+
 
 // ########################################
 // ########## ROUTE HANDLERS
@@ -147,6 +156,20 @@ app.get('/matchTickets', async function (req, res) {
         res.status(500).send(
             'An error occurred while executing the database queries.'
         );
+    }
+});
+
+app.put('/customers/update', async function (req, res) {
+    try {
+        const { customerID, firstName, lastName, email, phone } = req.body;
+        await db.query('CALL updateCustomer(?, ?, ?)', [
+            email,
+            phone,
+            customerID
+        ]);
+    } catch (error) {
+        console.error('Error updating customer:', error);
+        res.status(500).send('Failed to update customer.');
     }
 });
 

@@ -51,3 +51,53 @@
 
     <input type='submit' />
 </form>
+
+<script>
+    document.getElementById('update_customer_form').addEventListener('submit', async function(event) {
+        event.preventDefault();
+
+        console.log('Attempting to update customer');
+
+        const customerID = document.getElementById('update_customer_id').value;
+        const email = document.getElementById('update_customer_email').value;
+        const phone = document.getElementById('update_customer_phone').value;
+
+        if (!email) {
+            alert('Email cannot be empty');
+            return;
+        }
+
+        const response = await fetch('/customers/update', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                customerID: customerID,
+                email: email,
+                phone: phone
+            })
+        })
+        
+        if (response.ok) {
+            console.log('Customer updated successfully');
+            location.reload();
+        } else {
+            console.log('Error updating customer');
+        }
+    });
+
+    const customersData = {{{json customers}}};
+    const customerSelect = document.getElementById('update_customer_id');
+    const emailInput = document.getElementById('update_customer_email');
+    const phoneInput = document.getElementById('update_customer_phone');
+    customerSelect.addEventListener('change', function() {
+        const selectedCustomerID = customerSelect.value;
+        const selectedCustomer = customersData.find(customer => customer.customerID == selectedCustomerID);
+        if (selectedCustomer) {
+            emailInput.value = selectedCustomer.email;
+            phoneInput.value = selectedCustomer.phone;
+        } else {
+            emailInput.value = '';
+            phoneInput.value = '';
+        }
+    });
+</script>
