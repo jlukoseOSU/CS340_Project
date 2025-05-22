@@ -11,21 +11,22 @@ ORDER BY matchDate ASC;
 
 
 -- Seats Page --
---Display all seats ordered by section, row, and seatNumber--
+
+-- Display all seats ordered by section, row, and seatNumber --
 
 SELECT seatID, section, seatRow, seatNumber FROM Seats
 Order BY section, seatRow, seatNumber ASC;
 
 -- Orders Page --
 
---Read Orders Info and customer name, contact info--
+-- Read Orders Info and customer name, contact info --
 SELECT  Orders.orderID, DATE_FORMAT(Orders.orderDate, "%M %d %Y") as orderDate, Orders.total, Orders.paymentStatus, Customers.firstName, Customers.lastName,
 Customers.email 
 FROM Orders
 Inner JOIN Customers ON Orders.customerID = Customers.customerID
 
 
---Match Tickets Page--
+-- Match Tickets Page --
 
 SELECT MatchTickets.ticketID, opponentName, DATE_FORMAT(Matches.matchDate, "%M %d %Y") AS matchDate, section AS seatSection, 
         seatRow, seatNumber, CONCAT(Customers.firstName, ' ', Customers.lastName) AS customerName, 
