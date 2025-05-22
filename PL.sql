@@ -5,9 +5,12 @@ DROP PROCEDURE IF EXISTS GetCustomers;
 DELIMITER //
 CREATE PROCEDURE GetCustomers()
 BEGIN
-   SELECT customerID, firstName, lastName, email, phone FROM Customers;
+   SELECT customerID, firstName, lastName, email, phone
+   FROM Customers
+   ORDER BY `firstName` ASC;
 END //
 DELIMITER ;
+
 
 -- Update Customer email and Phone --
 DROP PROCEDURE IF EXISTS UpdateCustomer;
@@ -52,10 +55,11 @@ DROP PROCEDURE IF EXISTS GetOrders;
 DELIMITER //
 CREATE PROCEDURE GetOrders()
 BEGIN
-   SELECT Orders.orderID, DATE_FORMAT(Orders.orderDate, "%M %d %Y") as orderDate, Orders.total, Orders.paymentStatus, 
-          Customers.firstName, Customers.lastName, Customers.email 
+   SELECT  Orders.orderID, CONCAT(Customers.firstName, ' ', Customers.lastName) AS customerName,
+         DATE_FORMAT(Orders.orderDate, "%M %d %Y") as orderDate, Orders.total, Orders.paymentStatus
    FROM Orders
-   INNER JOIN Customers ON Orders.customerID = Customers.customerID;
+   INNER JOIN Customers ON Orders.customerID = Customers.customerID
+   ORDER BY Orders.orderDate ASC;
 END //
 DELIMITER ;
 
@@ -90,7 +94,7 @@ DROP PROCEDURE IF EXISTS GetMatchTickets;
 DELIMITER //
 CREATE PROCEDURE GetMatchTickets()
 BEGIN
-   SELECT MatchTickets.ticketID, opponentName, DATE_FORMAT(Matches.matchDate, "%M %d %Y") AS matchDate, section AS seatSection, 
+   SELECT MatchTickets.ticketID, opponentName, DATE_FORMAT(Matches.matchDate, "%M %d %Y") AS matchDate, section, 
           seatRow, seatNumber, CONCAT(Customers.firstName, ' ', Customers.lastName) AS customerName, 
           Orders.orderID, DATE_FORMAT(Orders.orderDate, "%M %d %Y") as orderDate, MatchTickets.price
    FROM MatchTickets
@@ -101,6 +105,7 @@ BEGIN
    ORDER BY matchDate ASC; 
 END //
 DELIMITER ;
+
 
 -- Update Match Ticket Seats and Price --
 DROP PROCEDURE IF EXISTS UpdateMatchTicket;
@@ -122,7 +127,3 @@ BEGIN
    WHERE ticketID = selectedID;
 END //
 DELIMITER ;
-
-
-
-
