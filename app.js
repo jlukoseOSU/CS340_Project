@@ -157,14 +157,18 @@ app.post('/matchTickets/update', async function (req, res) {
             matchID
         ]);
         // redirects once completes updates
-        res.redirect('/matchTickets')
     } catch (error) {
+        res.redirect('/matchTickets')
         console.error(`Error updating Match Ticket ID ${ticketID}`, error);
 
         res.render('matchTickets', {error: error.message})
     }
 });
 
+// Citation for the following function:
+// # Date: 05/20/2025
+// Based on: Module * exploration 
+// Source Module 8 Exploration "Implementing CUD Operations in your app"
 // CREATE ROUTES
 app.post('/matches/create', async function (req, res) {
     try {

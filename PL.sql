@@ -130,13 +130,14 @@ BEGIN
         WHERE matchID = matchIDInput AND
         seatID = seatIDInput AND ticketID != ticketIDInput
     ) THEN
-        SIGNAL SQLSTATE '4500'
-        SET MESSAGE_TEXT = 'Seat already reserved. Please select new seat.'
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Seat already reserved. Please select new seat.';
     ELSE
 
         UPDATE MatchTickets 
         SET seatID = seatIDInput, price = priceInput
         WHERE ticketID = ticketIDInput;
+    END IF;
 END //
 DELIMITER ;
 
