@@ -46,7 +46,12 @@
 </table>
 
 <h2>Update Match Ticket</h2>
-<form class='cuForm' id='update_matchTicket_form'>
+<form class='cuForm' id='update_matchTicket_form' method='POST' action='/matchTickets/update'>
+
+    {{#if errorMessage}}
+        <div class="error-banner">{{errorMessage}}</div>
+            {{error}}
+    {{/if}} 
     <label for='update_ticket_id'>Ticket to Update: </label>
     <select name='update_ticket_id' id='update_ticket_id' required>
         <option value='' disabled selected hidden>Select Ticket</option>

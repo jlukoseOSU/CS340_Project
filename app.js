@@ -146,6 +146,25 @@ app.put('/customers/update', async function (req, res) {
     }
 });
 
+app.post('/matchTickets/update', async function (req, res) {
+    const { ticketID, matchID, seatID, orderID, price, } = req.body;
+    try {
+        // update matchTicket info from form
+        await db.query('CALL UpdateMatchTicket(?, ?, ?, ?)', [
+            seatID,
+            price,
+            ticketID, 
+            matchID
+        ]);
+        // redirects once completes updates
+        res.redirect('/matchTickets')
+    } catch (error) {
+        console.error(`Error updating Match Ticket ID ${ticketID}`, error);
+
+        res.render('matchTickets', {error: error.message})
+    }
+});
+
 // CREATE ROUTES
 app.post('/matches/create', async function (req, res) {
     try {
