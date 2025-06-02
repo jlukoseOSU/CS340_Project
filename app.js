@@ -147,21 +147,32 @@ app.put('/customers/update', async function (req, res) {
 });
 
 app.post('/matchTickets/update', async function (req, res) {
-    const { ticketID, matchID, seatID, orderID, price, } = req.body;
+    const { ticketID, matchID, seatID } = req.body;
+    console.log(`Updating Match Ticket ID: ${ticketID}, Match ID: ${matchID}, Seat ID: ${seatID}`);
     try {
         // update matchTicket info from form
-        await db.query('CALL UpdateMatchTicket(?, ?, ?, ?)', [
+        await db.query('CALL UpdateMatchTicket(?, ?, ?)', [
             seatID,
-            price,
             ticketID, 
             matchID
         ]);
         // redirects once completes updates
-    } catch (error) {
         res.redirect('/matchTickets')
-        console.error(`Error updating Match Ticket ID ${ticketID}`, error);
+    } catch (error) {
 
-        res.render('matchTickets', {error: error.message})
+        // render page with error message
+        const [[matchTickets]] = await db.query('CALL getMatchTickets()');
+        const [[matches]] = await db.query('CALL GetMatches()');
+        const [[seats]] = await db.query('CALL getSeats()');
+        console.error(`Error updating Match Ticket ID ${ticketID}`, error);
+        res.render('matchTickets', {
+            layout: 'main',
+            matchTickets: matchTickets,
+            matches: matches,
+            seats: seats,
+            errorMessage: error.message
+        })
+
     }
 });
 
@@ -203,7 +214,7 @@ app.post('/matches/create', async function (req, res) {
 app.post('/reset-db', async function (req, res) {
     console.log('Resetting database...');
     try {
-        await db.query('CALL resetDB()');
+        await db.query('CALL ResetDB()');
         console.log('Database reset successfully');
         res.redirect('/');
     } catch (error) {

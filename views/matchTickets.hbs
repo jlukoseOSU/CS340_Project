@@ -53,7 +53,7 @@
             {{error}}
     {{/if}} 
     <label for='update_ticket_id'>Ticket to Update: </label>
-    <select name='update_ticket_id' id='update_ticket_id' required>
+    <select name='ticketID' id='update_ticket_id' required>
         <option value='' disabled selected hidden>Select Ticket</option>
         {{#each matchTickets}}
         <option value='{{this.ticketID}}' required>
@@ -67,7 +67,7 @@
     </select>
 
     <label for='update_match'>Match: </label>
-    <select name='update_match' id='update_match' required>
+    <select name='matchID' id='update_match' required>
         <option value='' disabled selected hidden>Select a match</option>
         {{#each matches}}
             <option value='{{this.matchID}}'>
@@ -76,9 +76,8 @@
         {{/each}}
     </select>
 
-
     <label for='update_seat'>Seat: </label>
-    <select name='update_seat' id='update_seat' required>
+    <select name='seatID' id='update_seat' required>
         <option value='' disabled selected hidden>Select a seat</option>
         {{#each seats}}
             <option value='{{this.seatID}}'>

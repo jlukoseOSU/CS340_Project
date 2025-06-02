@@ -1,4 +1,4 @@
---- -----------------------------------------------------
+--- ----------------------------------------------------
 -- Customers Page
 -- -----------------------------------------------------
 
@@ -122,8 +122,7 @@ DELIMITER ;
 -- Update Match Ticket Seats and Price --
 DROP PROCEDURE IF EXISTS UpdateMatchTicket;
 DELIMITER //
-CREATE PROCEDURE UpdateMatchTicket(IN seatIDInput INT, IN priceInput DECIMAL(10,2), IN ticketIDInput INT, 
-IN matchIDInput INT)
+CREATE PROCEDURE UpdateMatchTicket(IN seatIDInput INT, IN ticketIDInput INT, IN matchIDInput INT)
 BEGIN
     IF EXISTS (
         SELECT 1 FROM MatchTickets
@@ -133,9 +132,8 @@ BEGIN
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'Seat already reserved. Please select new seat.';
     ELSE
-
         UPDATE MatchTickets 
-        SET seatID = seatIDInput, price = priceInput
+        SET seatID = seatIDInput, matchID = matchIDInput
         WHERE ticketID = ticketIDInput;
     END IF;
 END //
