@@ -24,8 +24,8 @@
             <td>${{this.total}}</td>
             <td>{{this.paymentStatus}}</td>
 
-             <form id='delete_order_form'>
-                <input type='hidden' name='delete_order_id' value='{{this.orderID}}' />
+             <form id='delete_order_form' method='POST' action='/orders/delete'>
+                <input type='hidden' name='deleteOrderDd' value='{{this.orderID}}' />
                 <td>
                     <button type='submit'>
                         Delete

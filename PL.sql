@@ -119,7 +119,7 @@ END //
 DELIMITER ;
 
 
--- Update Match Ticket Seats and Price --
+-- Update Match Ticket Seats --
 DROP PROCEDURE IF EXISTS UpdateMatchTicket;
 DELIMITER //
 CREATE PROCEDURE UpdateMatchTicket(IN seatIDInput INT, IN ticketIDInput INT, IN matchIDInput INT)
@@ -144,8 +144,19 @@ DROP PROCEDURE IF EXISTS DeleteMatchTicket;
 DELIMITER //
 CREATE PROCEDURE DeleteMatchTicket(IN selectedID INT)
 BEGIN
+   DECLARE deletedOrderID INT; 
+   SELECT orderID into deletedOrderID
+   FROM MatchTickets
+   WHERE ticketID = selectedID;
+
    DELETE FROM MatchTickets
    WHERE ticketID = selectedID;
+
+
+   UPDATE Orders
+   SET paymentStatus= 'Cancelled'
+   WHERE orderID = deletedOrderID;
+   
 END //
 DELIMITER ;
 

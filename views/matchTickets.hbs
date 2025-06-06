@@ -32,8 +32,8 @@
             <td>${{this.price}}</td>
             <td>{{this.orderDate}}</td>
 
-             <form id='delete_matchTicket_form'>
-                <input type='hidden' name='delete_matchTicket_id' value='{{this.ticketID}}' />
+             <form id='delete_matchTicket_form' method = 'POST' action='/matchTickets/delete'>
+                <input type='hidden' name='deleteID' value='{{this.ticketID}}' />
                 <td>
                     <button type='submit'>
                         Delete

@@ -176,6 +176,38 @@ app.post('/matchTickets/update', async function (req, res) {
     }
 });
 
+// Deletes match ticket by ticketID and updates Order status to cancelled.
+app.post('/matchTickets/delete', async function (req, res) {
+    try{
+        let deleteID = req.body.deleteID;
+
+        await db.query('CALL DeleteMatchTicket(?)', [deleteID]);
+        console.log(`DELETE matchTicket ID ${deleteID}.`);
+        res.redirect('/matchTickets')
+    } catch (error) {
+        console.error('Error executing query', error);
+        res.status(500).send(
+            'Failed to delete matchTicket.'
+        );
+    }
+})
+
+// Deletes an Order by orderID.
+app.post('/orders/delete', async function (req, res) {
+    try{
+        let deleteOrderID = req.body.deleteID;
+
+        await db.query('CALL DeleteOrder(?)', [deleteOrderID]);
+        console.log(`DELETE order ID ${deleteOrderID}.`);
+        res.redirect('/orders')
+    } catch (error) {
+        console.error('Error executing query', error);
+        res.status(500).send(
+            'Failed to delete order.'
+        );
+    }
+})
+
 // Citation for the following function:
 // # Date: 05/20/2025
 // Based on: Module * exploration 
