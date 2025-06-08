@@ -1,7 +1,12 @@
-TODO:
-1. Implement updating a customer using stored procedure UpdateCustomer() [complete]
-2. Implement creating a match using stored procedure CreateMatch()  [complete]
-3. Implement deleting orders using stored procedure DeleteOrder()  [complete]
-4. Implement deleting matchTickets using stored procedure DeleteMatchTicket() [complete]
-5. Implement updating a matchTicket, I have not yet added a stored procedure for this one [sp added and implemented]
-6. Make sure the ResetDB() SP and button work [complete]
+    ``3 rows of sample data illustrating each table's function``
+    ``4 entities``
+        ``Plus an intersection table. 5 tables total.``
+    ``4 relationships``
+        ``Including 1 M:N relationship``
+    ``Select/Read/Display - all tables``
+    ``Create/Insert - 1 table, using PL/SQL``
+    ``Update - 1 table, using PL/SQL``
+    ``Update M:N - 1 M:N relationship``
+    ``Delete - 1 table, using PL/SQL``
+    ``Delete M:N - 1 M:N relationship``
+    ``RESET DB, using PL/SQL``
