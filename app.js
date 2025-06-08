@@ -195,7 +195,7 @@ app.post('/matchTickets/delete', async function (req, res) {
 // Deletes an Order by orderID.
 app.post('/orders/delete', async function (req, res) {
     try{
-        let deleteOrderID = req.body.deleteID;
+        let deleteOrderID = req.body.deleteOrderID;
 
         await db.query('CALL DeleteOrder(?)', [deleteOrderID]);
         console.log(`DELETE order ID ${deleteOrderID}.`);
