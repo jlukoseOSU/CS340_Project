@@ -114,12 +114,16 @@ app.get('/matchTickets', async function (req, res) {
         // get seats data for dropdown
         const [[seats]] = await db.query('CALL getSeats()');
 
+        // get customer for dropdown
+        const [[customers]] = await db.query('CALL getCustomers()');
+
         // Render the matchTickets.hbs file, and also send the renderer
         //  an object that contains our ticket, matches, and seats information
         res.render('matchTickets', { 
             matchTickets: matchTickets,
             matches: matches,
-            seats: seats
+            seats: seats,
+            customers: customers
         });
     } catch (error) {
         console.error('Error executing queries:', error);
@@ -143,6 +147,37 @@ app.put('/customers/update', async function (req, res) {
     } catch (error) {
         console.error('Error updating customer:', error);
         res.status(500).send('Failed to update customer.');
+    }
+});
+
+app.post('/matchTickets/create', async function (req, res){
+    const { matchID, seatID, customerID } = req.body;
+    console.log(`Creating new Match Ticket: Match ID: ${matchID}, Seat ID: ${seatID}, Customer ID: ${customerID}`);
+    try {
+        // create matchTicket query call
+        await db.query('CALL CreateMatchTicket(?, ?, ?)', [
+            matchID,
+            seatID,
+            customerID
+        ]);
+        // redirects once completes updates
+        res.redirect('/matchTickets')
+    } catch (error) {
+
+        // render page with error message
+        const [[matchTickets]] = await db.query('CALL getMatchTickets()');
+        const [[matches]] = await db.query('CALL GetMatches()');
+        const [[seats]] = await db.query('CALL getSeats()');
+        console.error(`Error creating Match Ticket: Match ID: ${matchID}, Seat ID: ${seatID}, 
+            Customer ID: ${customerID}`, error);
+        res.render('matchTickets', {
+            layout: 'main',
+            matchTickets: matchTickets,
+            matches: matches,
+            seats: seats,
+            errorMessage: error.message
+        })
+
     }
 });
 
@@ -210,7 +245,7 @@ app.post('/orders/delete', async function (req, res) {
 
 // Citation for the following function:
 // # Date: 05/20/2025
-// Based on: Module * exploration 
+// Based on: Module 8 exploration 
 // Source Module 8 Exploration "Implementing CUD Operations in your app"
 // CREATE ROUTES
 app.post('/matches/create', async function (req, res) {

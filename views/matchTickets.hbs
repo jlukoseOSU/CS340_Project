@@ -1,3 +1,7 @@
+{{#if errorMessage}}
+        <div class="error-banner">{{errorMessage}}</div>
+            {{error}}
+{{/if}} 
 <h1>Match Tickets</h1>
 
 {{! READ table }}
@@ -47,11 +51,6 @@
 
 <h2>Update Match Ticket</h2>
 <form class='cuForm' id='update_matchTicket_form' method='POST' action='/matchTickets/update'>
-
-    {{#if errorMessage}}
-        <div class="error-banner">{{errorMessage}}</div>
-            {{error}}
-    {{/if}} 
     <label for='update_ticket_id'>Ticket to Update: </label>
     <select name='ticketID' id='update_ticket_id' required>
         <option value='' disabled selected hidden>Select Ticket</option>
@@ -88,4 +87,40 @@
 
     <input type='submit' />
 
+</form>
+
+<h2>Create A Match Ticket</h2>
+<form class='cuForm' id='create_match_ticket_form' method='POST' action='/matchTickets/create'>
+
+    <label for='select_match'>Match: </label>
+    <select name='matchID' id='select_match' required>
+        <option value='' disabled selected hidden>Select a match</option>
+        {{#each matches}}
+            <option value='{{this.matchID}}'>
+                {{this.opponentName}} - {{this.matchDate}}
+            </option>
+        {{/each}}
+    </select>
+
+    <label for='select_seat'>Seat: </label>
+    <select name='seatID' id='select_seat' required>
+        <option value='' disabled selected hidden>Select a seat</option>
+        {{#each seats}}
+            <option value='{{this.seatID}}'>
+                {{this.section}} {{this.seatRow}} {{this.seatNumber}}
+            </option>
+        {{/each}}
+    </select>
+
+        <label for='customer_name'>Customer: </label>
+    <select name='customerID' id='select_customer' required>
+        <option value='' disabled selected hidden>Select Customer</option>
+        {{#each customers}}
+        <option value='{{this.customerID}}' required>
+            {{this.firstName}} {{this.lastName}}
+        </option>
+        {{/each}}
+    </select>
+
+    <input type='submit' />
 </form>

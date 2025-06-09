@@ -118,6 +118,35 @@ BEGIN
 END //
 DELIMITER ;
 
+-- Create a new Match Ticket --
+DROP PROCEDURE IF EXISTS CreateMatchTicket;
+
+DELIMITER //
+
+CREATE PROCEDURE CreateMatchTicket(IN matchIDinput int, IN seatIDinput int,  IN customerIDinput int)
+
+BEGIN
+
+IF EXISTS (
+        SELECT 1 FROM MatchTickets
+        WHERE matchID = matchIDInput AND
+        seatID = seatIDInput
+    ) THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Seat already reserved. Please select new seat.';
+    ELSE
+        INSERT INTO Orders (customerID, orderDate, total, paymentStatus)
+        VALUES (customerIDinput, NOW(), 20, 'Paid');
+
+        INSERT INTO MatchTickets (matchID, seatID, orderID, price) VALUES
+        (matchIDinput, seatIDinput, LAST_INSERT_ID(), 20.00);
+    END IF;
+
+END //
+
+DELIMETER ;
+
+
 
 -- Update Match Ticket Seats --
 DROP PROCEDURE IF EXISTS UpdateMatchTicket;
