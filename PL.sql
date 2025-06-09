@@ -144,7 +144,7 @@ IF EXISTS (
 
 END //
 
-DELIMETER ;
+DELIMITER ;
 
 
 
