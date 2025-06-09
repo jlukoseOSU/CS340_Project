@@ -95,7 +95,7 @@ BEGIN
    FROM Seats
    ORDER BY section, seatRow, seatNumber ASC;
 END //
-
+DELIMITER ;
 
 -- -----------------------------------------------------
 -- Match Tickets Page
